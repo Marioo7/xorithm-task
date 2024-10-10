@@ -1,0 +1,16 @@
+
+.custom-div {
+  width: 8px;
+  height: 24px; /* Default height */
+  border-radius: 10px;
+  cursor: pointer;
+  transition: height 0.3s ease, top 0.3s ease; /* Transition for height and top */
+  position: relative;
+  top: 0;
+}
+
+.custom-div.expanded {
+  height: 30px;
+  top: -3px;
+}
+

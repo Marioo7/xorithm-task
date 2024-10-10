@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    <mat-card class="w-75 mt-5">
+      <h2 class="text-center m-3">Sign Up</h2>
+      <form
+        [formGroup]="signupForm"
+        (ngSubmit)="signup()"
+        class="d-flex flex-column m-4"
+      >
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            formControlName="email"
+            class="form-control"
+            id="email"
+            required
+          />
+          <div
+            *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.errors?.['invalidEmail']"
+            class="text-danger"
+          >
+            Please enter a valid email (e.g., user@example.com).
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            formControlName="password"
+            class="form-control"
+            id="password"
+            required
+          />
+          <div
+            *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.errors?.['required']"
+            class="text-danger"
+          >
+            Password is required.
+          </div>
+          <div
+            *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.errors?.['invalidPassword']"
+            class="text-danger"
+          >
+            Password must contain at least 7 characters and include uppercase,
+            lowercase letters, and numbers and symbol.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label"
+            >Confirm Password</label
+          >
+          <input
+            type="password"
+            formControlName="confirmPassword"
+            class="form-control"
+            id="confirmPassword"
+            required
+          />
+          <div
+            *ngIf="signupForm.get('confirmPassword')?.touched && signupForm.errors?.['mismatch']"
+            class="text-danger"
+          >
+            Passwords do not match.
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="signupForm.invalid"
+        >
+          Sign Up
+        </button>
+      </form>
+
+      <hr />
+
+      <p class="text-center mt-4">
+        Already have an account? <a routerLink="/login">Login here</a>.
+      </p>
+    </mat-card>
+  </div>
+</div>

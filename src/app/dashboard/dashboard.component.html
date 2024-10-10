@@ -1,0 +1,233 @@
+<mat-toolbar class="d-flex flex-row justify-content-between">
+  <div>
+    <img
+      src="assets/img/xorithm.png"
+      width="130"
+      height="100"
+      alt="Xorithm logo"
+    />
+  </div>
+  <div class="d-none d-md-block">
+    <h1>Service Status Dashboard</h1>
+  </div>
+  <div class="d-flex align-items-center">
+    <!-- Menu for Logout Button -->
+    <button mat-button [matMenuTriggerFor]="menu">
+      <div class="d-flex flex-row">
+        <div>
+          <h1>{{ emailname }}</h1>
+        </div>
+
+        <div class="d-flex align-items-center">
+          <mat-icon class="fs-20">arrow_drop_down </mat-icon>
+        </div>
+      </div>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
+
+<div class="container mt-5">
+  <div class="text-center d-block d-md-none mb-5">
+    <h1>Service Status Dashboard</h1>
+  </div>
+  <div class="mb-3 text-center text-md-start">
+    <label class="h5" for="statusFilter">Filter by Status:</label>
+    <select
+      class="h6"
+      id="statusFilter"
+      [(ngModel)]="selectedStatus"
+      (change)="filterStatuses()"
+    >
+      <option class="h6" value="">All</option>
+      <option class="h6" value="Up">Up</option>
+      <option class="h6" value="Down">Down</option>
+      <option class="h6" value="Degraded">Degraded</option>
+    </select>
+  </div>
+
+  <!-- Server A Section -->
+  <div class="bg-light p-3">
+    <div class="d-flex flex-row justify-content-around mb-3">
+      <strong>OpenAI</strong>
+      <strong>192.168.1.1</strong>
+    </div>
+
+    <div
+      class="d-flex flex-wrap justify-content-center align-items-center gap-2"
+    >
+      <div
+        *ngFor="let status of filteredStatusesA; let i = index"
+        class="position-relative"
+      >
+        <div
+          class="custom-div"
+          [ngClass]="{ expanded: activeMenuIndexA === i }"
+          [ngStyle]="{ 'background-color': getStatusColor(status.status) }"
+          (click)="toggleMenu(menuTriggerA, i, 'A')"
+          [matMenuTriggerFor]="menuA"
+          #menuTriggerA="matMenuTrigger"
+        ></div>
+
+        <mat-menu
+          #menuA="matMenu"
+          class="menu-content"
+          (mouseleave)="menuMouseLeave(menuTriggerA, $event, i, 'A')"
+          (click)="$event.stopPropagation()"
+        >
+          <div class="p-3 d-flex flex-column justify-content-between">
+            <div class="d-flex flex-row justify-content-between">
+              <small class="text-secondary">{{ status.date }}</small>
+              <small [ngStyle]="{ color: getStatusColor(status.status) }">{{
+                status.status
+              }}</small>
+            </div>
+            <div class="d-flex flex-column align-items-center mt-3">
+              <small class="text-dark"
+                >Uptime:
+                <small class="text-primary"
+                  >{{ status.uptime }} hours</small
+                ></small
+              >
+              <small class="text-dark"
+                >Response Time:
+                <small class="text-primary"
+                  >{{ status.responseTime }} ms</small
+                ></small
+              >
+            </div>
+          </div>
+        </mat-menu>
+      </div>
+    </div>
+    <div class="group d-flex flex-row justify-content-around mt-3">
+      <p>Sept 1</p>
+      <p>Today</p>
+    </div>
+  </div>
+
+  <!-- Server B Section -->
+  <div class="bg-light p-3 mt-5">
+    <div class="d-flex flex-row justify-content-around mb-3">
+      <strong>Stripe</strong>
+      <strong>192.168.1.2</strong>
+    </div>
+
+    <div
+      class="d-flex flex-wrap justify-content-center align-items-center gap-2"
+    >
+      <div
+        *ngFor="let status of filteredStatusesB; let j = index"
+        class="position-relative"
+      >
+        <div
+          class="custom-div"
+          [ngClass]="{ expanded: activeMenuIndexB === j }"
+          [ngStyle]="{ 'background-color': getStatusColor(status.status) }"
+          (click)="toggleMenu(menuTriggerB, j, 'B')"
+          [matMenuTriggerFor]="menuB"
+          #menuTriggerB="matMenuTrigger"
+        ></div>
+
+        <mat-menu
+          #menuB="matMenu"
+          class="menu-content"
+          (mouseleave)="menuMouseLeave(menuTriggerB, $event, j, 'B')"
+          (click)="$event.stopPropagation()"
+        >
+          <div class="p-3 d-flex flex-column justify-content-between">
+            <div class="d-flex flex-row justify-content-between">
+              <small class="text-secondary">{{ status.date }}</small>
+              <small [ngStyle]="{ color: getStatusColor(status.status) }">{{
+                status.status
+              }}</small>
+            </div>
+            <div class="d-flex flex-column align-items-center mt-3">
+              <small class="text-dark"
+                >Uptime:
+                <small class="text-primary"
+                  >{{ status.uptime }} hours</small
+                ></small
+              >
+              <small class="text-dark"
+                >Response Time:
+                <small class="text-primary"
+                  >{{ status.responseTime }} ms</small
+                ></small
+              >
+            </div>
+          </div>
+        </mat-menu>
+      </div>
+    </div>
+    <div class="d-flex flex-row justify-content-around mt-3">
+      <p>Sept 1</p>
+      <p>Today</p>
+    </div>
+  </div>
+
+  <!-- Server C Section -->
+  <div class="bg-light p-3 mt-5">
+    <div class="d-flex flex-row justify-content-around mb-3">
+      <strong>Pulsetic</strong>
+      <strong>192.168.1.3</strong>
+    </div>
+
+    <div
+      class="d-flex flex-wrap justify-content-center align-items-center gap-2"
+    >
+      <div
+        *ngFor="let status of filteredStatusesC; let k = index"
+        class="position-relative"
+      >
+        <div
+          class="custom-div"
+          [ngClass]="{ expanded: activeMenuIndexC === k }"
+          [ngStyle]="{ 'background-color': getStatusColor(status.status) }"
+          (click)="toggleMenu(menuTriggerC, k, 'C')"
+          [matMenuTriggerFor]="menuC"
+          #menuTriggerC="matMenuTrigger"
+        ></div>
+
+        <mat-menu
+          #menuC="matMenu"
+          class="menu-content"
+          (mouseleave)="menuMouseLeave(menuTriggerC, $event, k, 'C')"
+          (click)="$event.stopPropagation()"
+        >
+          <div class="p-3 d-flex flex-column justify-content-between">
+            <div class="d-flex flex-row justify-content-between">
+              <small class="text-secondary">{{ status.date }}</small>
+              <small [ngStyle]="{ color: getStatusColor(status.status) }">{{
+                status.status
+              }}</small>
+            </div>
+            <div class="d-flex flex-column align-items-center mt-3">
+              <small class="text-dark"
+                >Uptime:
+                <small class="text-primary"
+                  >{{ status.uptime }} hours</small
+                ></small
+              >
+              <small class="text-dark"
+                >Response Time:
+                <small class="text-primary"
+                  >{{ status.responseTime }} ms</small
+                ></small
+              >
+            </div>
+          </div>
+        </mat-menu>
+      </div>
+    </div>
+    <div class="d-flex flex-row justify-content-around mt-3">
+      <p>Sept 1</p>
+      <p>Today</p>
+    </div>
+  </div>
+</div>

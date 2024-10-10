@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    <mat-card class="w-75 mt-5">
+      <h2 class="text-center m-3">Login</h2>
+      <form
+        [formGroup]="loginForm"
+        (ngSubmit)="login()"
+        class="d-flex flex-column m-4"
+      >
+        <!-- password input and validation -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            formControlName="email"
+            class="form-control"
+            id="email"
+            autocomplete="off"
+          />
+          <div
+            *ngIf="
+              loginForm.get('email')?.touched &&
+              loginForm.get('email')?.errors?.['required']
+            "
+            class="text-danger"
+          >
+            Email is required.
+          </div>
+          <div
+            *ngIf="
+              loginForm.get('email')?.touched &&
+              loginForm.get('email')?.errors?.['email']
+            "
+            class="text-danger"
+          >
+            Invalid email format.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            formControlName="password"
+            class="form-control"
+            id="password"
+            autocomplete="off"
+          />
+          <div
+            *ngIf="
+              loginForm.get('password')?.touched &&
+              loginForm.get('password')?.errors?.['required']
+            "
+            class="text-danger"
+          >
+            password is required.
+          </div>
+          <div
+            *ngIf="
+              loginForm.get('password')?.touched &&
+              loginForm.get('password')?.errors?.['password']
+            "
+            class="text-danger"
+          >
+            Invalid password format.
+          </div>
+        </div>
+        <!-- Password input and validation -->
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+
+      <hr />
+      <p class="text-center mt-4">
+        Don't have an account?
+        <a routerLink="/signup">Sign up here</a>.
+      </p>
+    </mat-card>
+  </div>
+</div>
